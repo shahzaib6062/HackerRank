@@ -7,52 +7,56 @@ string rtrim(const string &);
 vector<string> split(const string &);
 
 /*
- * Complete the 'designerPdfViewer' function below.
+ * Complete the 'lonelyinteger' function below.
  *
  * The function is expected to return an INTEGER.
- * The function accepts following parameters:
- *  1. INTEGER_ARRAY h
- *  2. STRING word
+ * The function accepts INTEGER_ARRAY a as parameter.
  */
 
-int designerPdfViewer(vector<int> h, string word) {
-    int highest_word = 0;
-    int size = word.length();
-    int arr[size];
-    for(int j=0;j<size;j++){
-        arr[j] = int(word[j])-97;
+int lonelyinteger(vector<int> a) {
+    int count = 0;
+    int output = 0;
+    int size = a.size();
+    for(int i=0 ; i < size;i++){
+        for(int j=0 ; j < size ; j++){
+            if(a[i] == a[j]){
+                count += 1;
+            }
+        }
+            if(count > 1){
+                count = 0;
+            }
+            else{
+                output = a[i];
+                break;
+            }
+        }
+        return output;
     }
-    for(int i=0 ; i<size ;i++){
-       if(highest_word < h[arr[i]] ){
-           
-           highest_word = h[arr[i]];
-       }
-    }
-    int output = highest_word*size;
-    return output;
-}
 
 int main()
 {
     ofstream fout(getenv("OUTPUT_PATH"));
 
-    string h_temp_temp;
-    getline(cin, h_temp_temp);
+    string n_temp;
+    getline(cin, n_temp);
 
-    vector<string> h_temp = split(rtrim(h_temp_temp));
+    int n = stoi(ltrim(rtrim(n_temp)));
 
-    vector<int> h(26);
+    string a_temp_temp;
+    getline(cin, a_temp_temp);
 
-    for (int i = 0; i < 26; i++) {
-        int h_item = stoi(h_temp[i]);
+    vector<string> a_temp = split(rtrim(a_temp_temp));
 
-        h[i] = h_item;
+    vector<int> a(n);
+
+    for (int i = 0; i < n; i++) {
+        int a_item = stoi(a_temp[i]);
+
+        a[i] = a_item;
     }
 
-    string word;
-    getline(cin, word);
-
-    int result = designerPdfViewer(h, word);
+    int result = lonelyinteger(a);
 
     fout << result << "\n";
 
